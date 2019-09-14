@@ -4,7 +4,7 @@ global:
   smtp_smarthost: 'smtp.gmail.com:587'
   smtp_from: 'zhaoqingjie@gmail.com'
   smtp_auth_username: 'zhaoqingjie@gmail.com'
-  smtp_auth_password: 'Qing3#ji.,'
+  smtp_auth_password: ''
   smtp_require_tls: false
 
 route:
