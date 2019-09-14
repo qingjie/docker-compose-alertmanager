@@ -1,1 +1,145 @@
-# docker-compose-alertmanager
+```
+[root@ip-172-31-18-94 config]# cat alertmanager.yml
+global:
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'zhaoqingjie@gmail.com'
+  smtp_auth_username: 'zhaoqingjie@gmail.com'
+  smtp_auth_password: 'Qing3#ji.,'
+  smtp_require_tls: false
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 10m
+  receiver: live-monitoring
+
+receivers:
+- name: 'live-monitoring'
+  email_configs:
+  - to: 'qzhao@shutterstock.com'
+  ```
+  
+  ```
+  [root@ip-172-31-18-94 config]# cat docker-compose-monitor.yml
+version: '2'
+
+networks:
+    monitor:
+        driver: bridge
+
+services:
+    prometheus:
+        image: prom/prometheus
+        container_name: prometheus
+        hostname: prometheus
+        restart: always
+        volumes:
+            - /usr/local/src/config/prometheus.yml:/etc/prometheus/prometheus.yml
+            - /usr/local/src/config/node_down.yml:/etc/prometheus/node_down.yml
+        ports:
+            - "9090:9090"
+        networks:
+            - monitor
+
+    alertmanager:
+        image: prom/alertmanager
+        container_name: alertmanager
+        hostname: alertmanager
+        restart: always
+        volumes:
+            - /usr/local/src/config/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+        ports:
+            - "9093:9093"
+        networks:
+            - monitor
+
+    grafana:
+        image: grafana/grafana
+        container_name: grafana
+        hostname: grafana
+        restart: always
+        ports:
+            - "3000:3000"
+        networks:
+            - monitor
+
+    node-exporter:
+        image: quay.io/prometheus/node-exporter
+        container_name: node-exporter
+        hostname: node-exporter
+        restart: always
+        ports:
+            - "9100:9100"
+        networks:
+            - monitor
+
+    cadvisor:
+        image: google/cadvisor:latest
+        container_name: cadvisor
+        hostname: cadvisor
+        restart: always
+        volumes:
+            - /:/rootfs:ro
+            - /var/run:/var/run:rw
+            - /sys:/sys:ro
+            - /var/lib/docker/:/var/lib/docker:ro
+        ports:
+            - "8080:8080"
+        networks:
+            - monitor
+  ```
+  
+  ```
+  [root@ip-172-31-18-94 config]# cat node_down.yml
+groups:
+- name: node_down
+  rules:
+  - alert: InstanceDown
+    expr: up == 0
+    for: 1s
+    labels:
+      user: test
+    annotations:
+      summary: "Instance {{ $labels.instance }} down"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 second."
+  ```
+  
+  ```
+  [root@ip-172-31-18-94 config]# cat prometheus.yml
+# my global config
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets: ['172.31.21.46:9093']
+      # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  - "node_down.yml"
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+    static_configs:
+    - targets: ['172.31.21.46:9090']
+
+  - job_name: 'cadvisor'
+    static_configs:
+    - targets: ['172.31.21.46:8080']
+
+  - job_name: 'node'
+    scrape_interval: 8s
+    static_configs:
+    - targets: ['172.31.21.46:9100']
+  ```
