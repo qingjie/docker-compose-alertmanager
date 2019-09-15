@@ -199,7 +199,8 @@ ExecStart=/usr/bin/node_exporter $OPTIONS
 WantedBy=multi-user.target
 4. systemctl start node_exporter && systemctl enable node_exporter
 
-systemctl start/stop/status node_exporter.service
+5. systemctl start/stop/status node_exporter.service
+```
 
 ### https://github.com/cloudflare/alertmanager2es
 
