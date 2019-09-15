@@ -171,3 +171,6 @@ scrape_configs:
     static_configs:
     - targets: ['172.31.21.46:9100']
 ```
+
+./alertmanager2es -help
+./alertmanager2es -addr 0.0.0.0:9097 -esURL https://search-test51-vzzwj46x7abo6gvtjsalygnfbi.us-east-1.es.amazonaws.com
