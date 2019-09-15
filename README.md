@@ -1,3 +1,12 @@
+### https://juejin.im/post/5c9dc0b06fb9a070ae3da6e7#heading-5
+
+```
+#启动容器：
+docker-compose -f /usr/local/src/config/docker-compose-monitor.yml up -d
+#删除容器：
+docker-compose -f /usr/local/src/config/docker-compose-monitor.yml down
+```
+
 ```
 [root@ip-172-31-18-94 config]# cat alertmanager.yml
 global:
@@ -172,5 +181,11 @@ scrape_configs:
     - targets: ['172.31.21.46:9100']
 ```
 
+### https://github.com/cloudflare/alertmanager2es
+
+```
 ./alertmanager2es -help
 ./alertmanager2es -addr 0.0.0.0:9097 -esURL https://search-test51-vzzwj46x7abo6gvtjsalygnfbi.us-east-1.es.amazonaws.com
+```
+
+
