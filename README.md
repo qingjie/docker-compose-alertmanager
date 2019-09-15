@@ -4,8 +4,8 @@ global:
   smtp_smarthost: 'smtp.gmail.com:587'
   smtp_from: 'zhaoqingjie@gmail.com'
   smtp_auth_username: 'zhaoqingjie@gmail.com'
-  smtp_auth_password: ''
-  smtp_require_tls: false
+  smtp_auth_password: 'rwsqpsqxtbmhmwat'
+  smtp_require_tls: yes
 
 route:
   group_by: ['alertname']
@@ -13,15 +13,21 @@ route:
   group_interval: 10s
   repeat_interval: 10m
   receiver: live-monitoring
+  routes:
+  - receiver: alertmanager2es
 
 receivers:
 - name: 'live-monitoring'
   email_configs:
-  - to: 'qzhao@shutterstock.com'
-  ```
-  
-  ```
-  [root@ip-172-31-18-94 config]# cat docker-compose-monitor.yml
+  - to: 'elvewyn@gmail.com'
+  - to: 'zhaoqingjie@gmail.com'
+- name: alertmanager2es
+  webhook_configs:
+  - url: 'http://172.31.41.120:9097/webhook'
+```
+
+```
+[root@ip-172-31-18-94 config]# cat docker-compose-monitor.yml
 version: '2'
 
 networks:
@@ -88,25 +94,47 @@ services:
             - "8080:8080"
         networks:
             - monitor
-  ```
-  
-  ```
-  [root@ip-172-31-18-94 config]# cat node_down.yml
+    es01:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.3.2
+        container_name: es01
+        environment:
+         - node.name=es01
+             - discovery.seed_hosts=es02
+             - cluster.initial_master_nodes=es01,es02
+             - cluster.name=docker-cluster
+             - bootstrap.memory_lock=true
+        ulimits:
+           memlock:
+               soft: -1
+               hard: -1
+        volumes:
+             - esdata01:/usr/share/elasticsearch/data
+        ports:
+             - 9200:9200
+
+
+volumes:
+    esdata01:
+        driver: local
+```
+```
+[root@ip-172-31-18-94 config]# cat node_down.yml
 groups:
 - name: node_down
   rules:
   - alert: InstanceDown
     expr: up == 0
-    for: 1s
+    for: 1m
     labels:
       user: test
     annotations:
       summary: "Instance {{ $labels.instance }} down"
-      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 second."
-  ```
-  
-  ```
-  [root@ip-172-31-18-94 config]# cat prometheus.yml
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute."
+
+```
+
+```
+[root@ip-172-31-18-94 config]# cat prometheus.yml
 # my global config
 global:
   scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
@@ -117,7 +145,7 @@ global:
 alerting:
   alertmanagers:
   - static_configs:
-    - targets: ['172.31.21.46:9093']
+    - targets: ['172.31.18.94:9093']
       # - alertmanager:9093
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
@@ -132,7 +160,7 @@ scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: 'prometheus'
     static_configs:
-    - targets: ['172.31.21.46:9090']
+    - targets: ['172.31.18.94:9090']
 
   - job_name: 'cadvisor'
     static_configs:
@@ -142,4 +170,4 @@ scrape_configs:
     scrape_interval: 8s
     static_configs:
     - targets: ['172.31.21.46:9100']
-  ```
+```
