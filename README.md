@@ -28,7 +28,6 @@ route:
 receivers:
 - name: 'live-monitoring'
   email_configs:
-  - to: 'elvewyn@gmail.com'
   - to: 'zhaoqingjie@gmail.com'
 - name: alertmanager2es
   webhook_configs:
