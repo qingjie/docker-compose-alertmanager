@@ -1,9 +1,9 @@
 ### https://juejin.im/post/5c9dc0b06fb9a070ae3da6e7#heading-5
 
 ```
-#启动容器：
+#start：
 docker-compose -f /usr/local/src/config/docker-compose-monitor.yml up -d
-#删除容器：
+#delete：
 docker-compose -f /usr/local/src/config/docker-compose-monitor.yml down
 ```
 
