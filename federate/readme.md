@@ -37,7 +37,9 @@ scrape_configs:
     static_configs:
     - targets: ['172.31.47.127:9090']
 ```
-The following are private IP
+### The following are private IP
+```
 172.31.47.127:9090 is q1 prometheus
 172.31.41.232:9090 is master prometheus
 172.31.41.232:9093 is alertmanager
+```
