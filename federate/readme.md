@@ -67,3 +67,31 @@ scrape_configs:
 172.31.41.232:9090 is master prometheus
 172.31.41.232:9093 is alertmanager
 ```
+
+### test command
+
+```
+docker run -d -v /etc/prometheus/prometheus.yml:$(pwd)/prometheus.yml -p 9090:9090 --name master prom/prometheus
+
+
+docker exec -it e48 cat /etc/prometheus/prometheus.yml
+docker run -d -p 9090:9090 --name prom prom/prometheus
+
+docker exec -it e48 vi /etc/prometheus/prometheus.yml
+
+
+docker run -d -p 9090:9090 --name master-prometheus prom/prometheus
+
+
+
+docker run -d -p 9090:9090 --name q1-prometheus prom/prometheus
+
+systemctl restart docker
+
+docker restart e48
+docker inspect e48
+docker logs e48
+docker run -d -v $(pwd)/prometheus.yml:/etc/prometheus/prometheus.yml -p 9090:9090 --name master prom/prometheus
+docker run -d -v /etc/prometheus/prometheus.yml:$(pwd)/prometheus.yml -p 9090:9090 --name master prom/prometheus
+
+```
