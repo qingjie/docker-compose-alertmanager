@@ -1,3 +1,27 @@
+### alertmanager.yml
+```
+global:
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'zhaoqingjie@gmail.com'
+  smtp_auth_username: 'zhaoqingjie@gmail.com'
+  smtp_auth_password: 'rwsqpsqxtbmhmwat'
+  smtp_require_tls: yes
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 10m
+  receiver: live-monitoring
+
+receivers:
+- name: 'live-monitoring'
+  email_configs:
+  - to: 'zhaoqingjie@gmail.com'
+```
+
+
+### prometheus.yml
 ```
 # my global config
 global:
