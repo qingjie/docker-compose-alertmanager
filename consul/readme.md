@@ -39,4 +39,5 @@ public IP:54.89.154.123:
 private IP: 172.31.41.232
 consul agent -ui --data-dir /tmp/consul --dev -bind '{{GetInterfaceIP "eth0"}}' -server --client=0.0.0.0
 
+http://54.89.154.123:8500
 ```
