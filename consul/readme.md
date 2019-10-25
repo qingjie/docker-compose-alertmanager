@@ -44,3 +44,7 @@ http://54.89.154.123:8500
 ![](img/1.png)
 ![](img/2.png)
 ![](img/3.png)
+---
+python command to start port
+![](img/11.png)
+![](img/22.png)
