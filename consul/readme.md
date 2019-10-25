@@ -41,3 +41,6 @@ consul agent -ui --data-dir /tmp/consul --dev -bind '{{GetInterfaceIP "eth0"}}' 
 
 http://54.89.154.123:8500
 ```
+![](img/1.png)
+![](img/2.png)
+![](img/3.png)
