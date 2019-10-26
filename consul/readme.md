@@ -48,3 +48,20 @@ http://54.89.154.123:8500
 python command to start port
 ![](img/11.png)
 ![](img/22.png)
+
+---
+yum install bind-utils
+dig @127.0.0.1 -p 8600 helloname.service.dc1.consul. ANY
+curl http://127.0.0.1:8500/v1/health/service/helloname?passing=false
+
+
+
+[root@ip-172-31-41-232 centos]# cat in.tpl
+{{ range service "helloname" }}
+server {{ .Name }} {{ .Address }}:{{ .Port }}{{ end }}
+
+./consul-template -template "in.tpl:out.txt" -once
+
+https://github.com/hashicorp/consul-template
+https://github.com/hashicorp/consul-template#service
+https://github.com/hashicorp/consul-template#services
