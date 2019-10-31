@@ -208,12 +208,14 @@ WantedBy=multi-user.target
 ./alertmanager2es -addr 0.0.0.0:9097 -esURL https://search-test51-vzzwj46x7abo6gvtjsalygnfbi.us-east-1.es.amazonaws.com
 ```
 
-```
-kubectl port-forward my-pod 5000:6000               # Listen on port 5000 on the local machine and forward to port 6000 on my-pod
-```
 
 ![](img/es0.png)
 
 ![](img/es1.png)
 
 ![](img/es2.png)
+
+```
+# Listen on port 5000 on the local machine and forward to port 6000 on my-pod
+kubectl port-forward my-pod 5000:6000               
+```
