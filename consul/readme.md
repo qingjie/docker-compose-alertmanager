@@ -1,8 +1,7 @@
 ```
 consul agent -ui --data-dir /tmp/consul --dev -bind '{{GetInterfaceIP "eth0"}}' -server --client=0.0.0.0
 
-consul agent -ui --data-dir /tmp/consul --dev -bind '{{GetInterfaceIP "eth0"}}' --server=false --client=0.0.0.0 --join 172.31.41.232
-
+consul agent -ui --data-dir /tmp/consul --dev -bind '{{GetInterfaceIP "eth0"}}' --server=false --client=0.0.0.0 --join 172.31.41.232 --config-dir=/opt/consul
 
 consul client:
 private IP: 172.31.47.127
@@ -65,3 +64,4 @@ server {{ .Name }} {{ .Address }}:{{ .Port }}{{ end }}
 https://github.com/hashicorp/consul-template
 https://github.com/hashicorp/consul-template#service
 https://github.com/hashicorp/consul-template#services
+
