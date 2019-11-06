@@ -61,7 +61,78 @@ server {{ .Name }} {{ .Address }}:{{ .Port }}{{ end }}
 
 ./consul-template -template "in.tpl:out.txt" -once
 
-https://github.com/hashicorp/consul-template
-https://github.com/hashicorp/consul-template#service
-https://github.com/hashicorp/consul-template#services
+* https://github.com/hashicorp/consul-template
+* https://github.com/hashicorp/consul-template#service
+* https://github.com/hashicorp/consul-template#services
 
+---
+* https://github.com/luksa/kubernetes-in-action/blob/master/Chapter05/kubia-svc-nodeport.yaml
+* https://www.consul.io/docs/platform/k8s/run.html
+
+```
+(base) Qingjies-MBP-2:test qingjiezhao$ cat test-nodeport.yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: kubia
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kubia
+  template:
+    metadata:
+      labels:
+        app: kubia
+    spec:
+      containers:
+      - name: kubia
+        image: luksa/kubia
+
+```
+
+```
+(base) Qingjies-MBP-2:test qingjiezhao$ cat test-nodeport-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubia-nodeport
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30123
+  selector:
+    app: kubia
+
+```
+
+```
+global:
+  datacenter: hashidc1
+
+ui:
+  service:
+    type: "LoadBalancer"
+
+connectInject:
+  enabled: true
+
+client:
+  enabled: true
+  grpc: true
+
+server:
+  replicas: 1
+  bootstrapExpect: 1
+  disruptionBudget:
+    enabled: true
+    maxUnavailable: 0
+syncCatalog:
+  enabled: true
+  toConsul: true
+  toK8S: false
+```
+
+* helm upgrade hedgehog /Users/qingjiezhao/Downloads/demo-consul-101/k8s/consul-helm-0.12.0 -f helm-consul-values.yaml
