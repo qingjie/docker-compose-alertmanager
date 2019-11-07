@@ -136,3 +136,9 @@ syncCatalog:
 ```
 
 * helm upgrade hedgehog /Users/qingjiezhao/Downloads/demo-consul-101/k8s/consul-helm-0.12.0 -f helm-consul-values.yaml
+---
+```
+helm install -f helm-consul-values.yaml --name qingjie --namespace kube-public ./consul-helm
+
+helm delete qingjie --purge
+```
