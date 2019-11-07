@@ -141,4 +141,7 @@ syncCatalog:
 helm install -f helm-consul-values.yaml --name qingjie --namespace kube-public ./consul-helm
 
 helm delete qingjie --purge
+minikube service list
+minikube service qingjie-consul-ui -n kube-public
+
 ```
