@@ -146,6 +146,7 @@ minikube service qingjie-consul-ui -n kube-public
 
 ```
 ---
+```
 11/11/2019
 
 outside consul(IP:192.168.1.105)
@@ -176,9 +177,9 @@ syncCatalog:
 
 
 
-
+```
 ----
 Note: outside consul IP:192.168.1.105
-http://localhost:8500/ui/dc1/services
-http://192.168.99.102:30123/
-https://sysdig.com/blog/kubernetes-monitoring-prometheus/
+* http://localhost:8500/ui/dc1/services
+* http://192.168.99.102:30123/
+* https://sysdig.com/blog/kubernetes-monitoring-prometheus/
