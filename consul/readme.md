@@ -147,6 +147,8 @@ minikube service qingjie-consul-ui -n kube-public
 ```
 ---
 11/11/2019
+![](img/a1.png)
+![](img/a2.png)
 ```
 
 outside consul(IP:192.168.1.105)
