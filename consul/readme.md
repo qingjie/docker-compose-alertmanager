@@ -185,3 +185,5 @@ Note: outside consul IP:192.168.1.105
 * http://localhost:8500/ui/dc1/services
 * http://192.168.99.102:30123/
 * https://sysdig.com/blog/kubernetes-monitoring-prometheus/
+![](img/20191111.png)
+![](img/20191112.png)
