@@ -145,3 +145,40 @@ minikube service list
 minikube service qingjie-consul-ui -n kube-public
 
 ```
+---
+11/11/2019
+
+outside consul(IP:192.168.1.105)
+
+./consul agent -data-dir=/tmp/data -server -bind '{{ GetInterfaceIP "en0" }}' -bootstrap-expect 1 -ui
+
+
+
+
+
+
+helm install -f consul-values.yaml --name consul ./consul-helm-0.12.0
+
+(base) Qingjies-MBP-2:consul qingjiezhao$ cat consul-values.yaml
+global:
+    datacenter: dc1
+    enabled: false
+
+client:
+    enabled: true
+    join: ["192.168.1.105:8301"]
+
+syncCatalog:
+    enabled: true
+    toConsul: true
+    toK8S: false
+
+
+
+
+
+----
+Note: outside consul IP:192.168.1.105
+http://localhost:8500/ui/dc1/services
+http://192.168.99.102:30123/
+https://sysdig.com/blog/kubernetes-monitoring-prometheus/
