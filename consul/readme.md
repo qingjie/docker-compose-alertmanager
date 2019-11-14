@@ -187,3 +187,6 @@ Note: outside consul IP:192.168.1.105
 * https://sysdig.com/blog/kubernetes-monitoring-prometheus/
 ![](img/20191111.png)
 ![](img/20191112.png)
+```
+kubectl get events --sort-by=.metadata.creationTimestamp -n sysops
+```
