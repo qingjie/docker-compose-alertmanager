@@ -1,9 +1,7 @@
 1. set prometheus in kubernetes
 * http://192.168.99.102:30080/
 
-```
-helm upgrade --reuse-values -f prometheus-values.yml prometheus stable/prometheus
-```
+* prometheus-values.yml
 ```
 podSecurityPolicy:
   enabled: true
@@ -37,6 +35,10 @@ pushgateway:
   enabled: false
 
 ```
+```
+helm upgrade --reuse-values -f prometheus-values.yml prometheus stable/prometheus
+```
+
 2. set port-foward in kubernetes
 * kubectl get svc
 * minikube ip
