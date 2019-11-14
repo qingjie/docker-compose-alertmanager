@@ -87,6 +87,8 @@ pushgateway:
 
 ```
 
+register prometheus to consul
+```
 ./consul services register service.json
 (base) Qingjies-MBP-2:consul qingjiezhao$ cat service.json
 {
@@ -97,4 +99,4 @@ pushgateway:
 		"address": "192.168.99.102"
 	}
 }
-
+```
