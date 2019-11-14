@@ -1,11 +1,50 @@
-master consul
-* http://localhost:8500/ui/dc1/services/prometheus
-```
-./consul agent -ui --data-dir /tmp/consul --dev -bind '{{GetInterfaceIP "en0"}}' -server --client=0.0.0.0
-
+1 set prometheus in kubernetes
+* http://192.168.99.102:30080/
 
 ```
-master prometheus
+helm upgrade --reuse-values -f prometheus-values.yml prometheus stable/prometheus
+```
+```
+podSecurityPolicy:
+  enabled: true
+
+server:
+  service:
+    nodePort: 30080
+    type: NodePort
+
+  retention: 48h
+
+  global:
+    scrape_interval: 15s
+    scrape_timeout: 15s
+
+  resources:
+    requests:
+      cpu: 10m
+      memory: 1Gi
+
+kubeStateMetrics:
+  enabled: false
+
+nodeExporter:
+  enabled: false
+
+alertmanager:
+  enabled: false
+
+pushgateway:
+  enabled: false
+
+```
+2. set port-foward in kubernetes
+* kubectl get svc
+* minikube ip
+```
+kubectl port-forward svc/prometheus-server 8080:80
+```
+
+3. master prometheus
 * http://localhost:9090/
 ```
 # my global config
@@ -47,47 +86,13 @@ scrape_configs:
       - prometheus
 
 ```
-prometheus in kubernetes
-* http://192.168.99.102:30080/
-
+4. master consul
+* http://localhost:8500/ui/dc1/services/prometheus
 ```
-helm upgrade --reuse-values -f prometheus-values.yml prometheus stable/prometheus
-```
-```
-podSecurityPolicy:
-  enabled: true
-
-server:
-  service:
-    nodePort: 30080
-    type: NodePort
-
-  retention: 48h
-
-  global:
-    scrape_interval: 15s
-    scrape_timeout: 15s
-
-  resources:
-    requests:
-      cpu: 10m
-      memory: 1Gi
-
-kubeStateMetrics:
-  enabled: false
-
-nodeExporter:
-  enabled: false
-
-alertmanager:
-  enabled: false
-
-pushgateway:
-  enabled: false
-
+./consul agent -ui --data-dir /tmp/consul --dev -bind '{{GetInterfaceIP "en0"}}' -server --client=0.0.0.0
 ```
 
-register prometheus to consul
+5. register prometheus to consul
 ```
 ./consul services register service.json
 (base) Qingjies-MBP-2:consul qingjiezhao$ cat service.json
@@ -99,11 +104,4 @@ register prometheus to consul
 		"address": "192.168.99.102"
 	}
 }
-```
-
-set port-foward in kubernetes
-* kubectl get svc
-* minikube ip
-```
-kubectl port-forward svc/prometheus-server 8080:80
 ```
