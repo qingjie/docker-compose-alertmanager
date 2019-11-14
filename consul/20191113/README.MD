@@ -1,4 +1,4 @@
-1 set prometheus in kubernetes
+1. set prometheus in kubernetes
 * http://192.168.99.102:30080/
 
 ```
