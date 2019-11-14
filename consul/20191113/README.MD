@@ -100,7 +100,10 @@ register prometheus to consul
 	}
 }
 ```
+
 set port-foward in kubernetes
+* kubectl get svc
+* minikube ip
 ```
 kubectl port-forward svc/prometheus-server 8080:80
 ```
