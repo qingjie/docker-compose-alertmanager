@@ -1,4 +1,7 @@
 ![](img/1.png)
+![](img/2.png)
+![](img/3.png)
+![](img/4.png)
 1. set prometheus in kubernetes
 * http://192.168.99.102:30080/
 
