@@ -49,3 +49,7 @@ scrape_configs:
 ```
 prometheus in kubernetes
 http://192.168.99.102:30080/
+
+```
+helm upgrade --reuse-values -f prometheus-values.yml prometheus stable/prometheus
+```
