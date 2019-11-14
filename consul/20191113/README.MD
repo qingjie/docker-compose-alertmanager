@@ -1,9 +1,12 @@
 master consul
+* http://localhost:8500/ui/dc1/services/prometheus
 ```
 ./consul agent -ui --data-dir /tmp/consul --dev -bind '{{GetInterfaceIP "en0"}}' -server --client=0.0.0.0
 
+
 ```
 master prometheus
+* http://localhost:9090/
 ```
 # my global config
 global:
