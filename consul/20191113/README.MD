@@ -98,7 +98,7 @@ scrape_configs:
 ./consul agent -ui --data-dir /tmp/consul --dev -bind '{{GetInterfaceIP "en0"}}' -server --client=0.0.0.0
 ```
 
-5. register prometheus to consul
+5. register prometheus(master) to consul (master)
 ```
 ./consul services register service.json
 (base) Qingjies-MBP-2:consul qingjiezhao$ cat service.json
