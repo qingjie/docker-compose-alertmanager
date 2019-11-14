@@ -100,3 +100,7 @@ register prometheus to consul
 	}
 }
 ```
+set port-foward in kubernetes
+```
+kubectl port-forward svc/prometheus-server 8080:80
+```
