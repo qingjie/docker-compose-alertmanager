@@ -53,3 +53,36 @@ prometheus in kubernetes
 ```
 helm upgrade --reuse-values -f prometheus-values.yml prometheus stable/prometheus
 ```
+```
+podSecurityPolicy:
+  enabled: true
+
+server:
+  service:
+    nodePort: 30080
+    type: NodePort
+
+  retention: 48h
+
+  global:
+    scrape_interval: 15s
+    scrape_timeout: 15s
+
+  resources:
+    requests:
+      cpu: 10m
+      memory: 1Gi
+
+kubeStateMetrics:
+  enabled: false
+
+nodeExporter:
+  enabled: false
+
+alertmanager:
+  enabled: false
+
+pushgateway:
+  enabled: false
+
+```
