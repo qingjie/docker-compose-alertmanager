@@ -86,3 +86,15 @@ pushgateway:
   enabled: false
 
 ```
+
+./consul services register service.json
+(base) Qingjies-MBP-2:consul qingjiezhao$ cat service.json
+{
+	"service": {
+		"name": "prometheus",
+		"id": "prometheus",
+		"port": 30080,
+		"address": "192.168.99.102"
+	}
+}
+
