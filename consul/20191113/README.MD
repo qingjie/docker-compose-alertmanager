@@ -47,3 +47,5 @@ scrape_configs:
       - prometheus
 
 ```
+prometheus in kubernetes
+http://192.168.99.102:30080/
