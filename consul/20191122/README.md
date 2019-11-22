@@ -1,2 +1,2 @@
 
-![](img/Consul Across K8S.jpg)
+![](img/Consul_Across_K8S.jpg)
