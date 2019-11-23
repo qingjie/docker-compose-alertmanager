@@ -18,6 +18,8 @@ syncCatalog:
     default: false
     toConsul: true
 ```
+![](img/hostNetwork.png)
+
 ```
 root@ip-172-31-45-198:/home/admin# cat prometheus-values.yml
 podSecurityPolicy:
