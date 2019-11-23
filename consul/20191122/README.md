@@ -18,6 +18,7 @@ syncCatalog:
     default: false
     toConsul: true
 ```
+change client-daemonset.yaml
 ![](img/hostNetwork.png)
 
 ```
