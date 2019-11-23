@@ -59,7 +59,11 @@ pushgateway:
 ```
 
 create mkdir /tmp/prometheus_data in node1 and node2
-
+```
+mkdir prometheus_data
+chmod a+rw prometh
+chmod a+rw prometheus_data/
+```
 ```
 root@ip-172-31-45-198:/home/admin# cat pv.yml
 apiVersion: v1
@@ -82,8 +86,8 @@ kubectl create -f pv.yml
 
 helm install -f prometheus-values.yml -n promethues stable/prometheus
 
+helm install -f consul-values.yml -n consul ./consul-helm
 watch -n 1 kubectl get pods
 
 
-helm install -f consul-values.yml -n consul ./consul-helm
 ```
