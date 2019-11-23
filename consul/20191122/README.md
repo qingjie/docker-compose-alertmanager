@@ -57,6 +57,9 @@ alertmanager:
 pushgateway:
   enabled: false
 ```
+
+create mkdir /tmp/prometheus_data in node1 and node2
+
 ```
 root@ip-172-31-45-198:/home/admin# cat pv.yml
 apiVersion: v1
